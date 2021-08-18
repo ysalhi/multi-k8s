@@ -14,7 +14,7 @@ after_success:
   - docker build -t ayucawa/multi-server ./server
   - docker build -t ayucawa/multi-worker ./worker
   #Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" -password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ID" --password-stdin
   - docker push ayucawa/multi-client
   - docker push ayucawa/multi-nginx
   - docker push ayucawa/multi-server
