@@ -8,14 +8,14 @@ before_install:
 script:
   - docker run ayucawa/react-test -e CI=true npm run test -- --coverage
 
-after_success:
-  - docker build -t ayucawa/multi-client ./client
-  - docker build -t ayucawa/multi-nginx ./nginx
-  - docker build -t ayucawa/multi-server ./server
-  - docker build -t ayucawa/multi-worker ./worker
-  #Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_ID" --password-stdin
-  - docker push ayucawa/multi-client
-  - docker push ayucawa/multi-nginx
-  - docker push ayucawa/multi-server
-  - docker push ayucawa/multi-worker 
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "multi-docker"
+  env: "Multidocker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-644221692013"
+  bucket_path: "multi-docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
