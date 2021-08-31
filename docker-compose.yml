@@ -29,6 +29,7 @@ services:
       - PGPASSWORD=postgres_password
       - PGPORT=5432
   client:
+    restart: always
     build:
       dockerfile: Dockerfile
       context: ./client
@@ -36,6 +37,7 @@ services:
       - /app/node_modules
       - ./client:/app
   worker:
+    restart: always
     build:
       dockerfile: Dockerfile
       context: ./worker
